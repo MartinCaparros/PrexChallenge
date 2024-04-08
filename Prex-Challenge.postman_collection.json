@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "779d5026-b9fb-4117-a475-92fa70a72c2f",
+		"name": "Prex-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19715995"
+	},
+	"item": [
+		{
+			"name": "Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonObject = pm.response.json();",
+							"pm.environment.set(\"gif_id\", jsonObject.data[0].id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gif/search?search=cat",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gif",
+						"search"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "cat"
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "offset",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Parameters:\n\n- Search: required|String\n    \n- Limit: optional|Number\n    \n- Offset: optional|Number"
+			},
+			"response": []
+		},
+		{
+			"name": "Search By ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gif/search/byId?id={{gif_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gif",
+						"search",
+						"byId"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{gif_id}}"
+						}
+					]
+				},
+				"description": "Parameters:\n\n- ID: required|string"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonObject = pm.response.json();",
+							"pm.environment.set(\"token\", jsonObject.token);",
+							"pm.environment.set(\"user_id\", jsonObject.id)",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"admin@gmail.com\",\n\t\"password\": \"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/user/login",
+				"description": "Both parameteres are required"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/user/register",
+				"description": "Both parameteres are required"
+			},
+			"response": []
+		},
+		{
+			"name": "Save Favorite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gif/save/favorite?user_id={{user_id}}&gif_id={{gif_id}}&alias=\"catc\"",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gif",
+						"save",
+						"favorite"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "{{user_id}}"
+						},
+						{
+							"key": "gif_id",
+							"value": "{{gif_id}}"
+						},
+						{
+							"key": "alias",
+							"value": "\"catc\""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

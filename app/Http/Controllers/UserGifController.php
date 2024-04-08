@@ -6,6 +6,8 @@ use App\Http\Requests\GifSearchRequest;
 use App\Http\Requests\GifSearchByIdRequest;
 use App\Http\Requests\StoreFavoriteGifRequest;
 
+use App\Http\Resources\UserFavoriteGifStoreResource;
+
 use App\Interfaces\UserGifRepositoryInterface;
 
 use App\Services\GIPHYService;
@@ -59,6 +61,6 @@ class UserGifController extends Controller
     {
         $new_favorite = $this->userGifRepository->store($request->only('user_id', 'gif_id', 'alias'));
 
-        return response()->json($new_favorite, 200);
+        return response(new UserFavoriteGifStoreResource($new_favorite), 200);
     }
 }
